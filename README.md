@@ -118,7 +118,41 @@ decision exits non-zero and blocks the merge.
 Setup: add a `GROQ_API_KEY` repository secret to enable the LLM layer. Without
 it, StaticPulse still runs scanners-only and posts the deterministic result.
 
-Least-privilege permissions — it requests only what it uses:
+### One-click: use it as a GitHub Action
+
+Others can add StaticPulse to any repo in ~5 lines — no Python or Semgrep setup:
+
+```yaml
+# .github/workflows/security.yml
+name: Security review
+on: { pull_request: { types: [opened, synchronize, reopened] } }
+permissions: { contents: read, pull-requests: write, issues: write }
+jobs:
+  staticpulse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }        # full history so the diff is meaningful
+      - uses: b33pl0g1c/staticpulse@v1
+        with:
+          groq-api-key: ${{ secrets.GROQ_API_KEY }}   # optional; omit for scanners-only
+```
+
+### Run it anywhere with Docker
+
+Semgrep and StaticPulse are baked into one image, so it runs on any host
+(Windows included) with nothing else installed:
+
+```bash
+docker run --rm -v "$PWD:/src" ghcr.io/b33pl0g1c/staticpulse scan --repo /src --no-llm
+```
+
+Add `-e GROQ_API_KEY=...` to enable the LLM layer. The image is published to the
+GitHub Container Registry on every push to `main`.
+
+### Least-privilege permissions
+
+The bundled workflow (and the action) request only what they use:
 
 ```yaml
 permissions:

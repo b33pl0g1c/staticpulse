@@ -1,0 +1,31 @@
+name: StaticPulse
+description: AI-assisted PR security review — Semgrep scanners + an LLM that proposes fixes it verifies by re-scanning, with a deterministic PASS/WARN/FAIL gate.
+author: Akash Poudel
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  github-token:
+    description: Token used to post the PR comment and inline reviews.
+    required: false
+    default: ${{ github.token }}
+  groq-api-key:
+    description: Groq API key to enable the LLM layer. Omit to run scanners-only.
+    required: false
+    default: ''
+  args:
+    description: Extra CLI arguments passed to `staticpulse scan-pr`.
+    required: false
+    default: ''
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - scan-pr
+    - --repo
+    - .
+  env:
+    INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
+    INPUT_GROQ_API_KEY: ${{ inputs.groq-api-key }}
