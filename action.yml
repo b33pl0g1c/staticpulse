@@ -1,5 +1,5 @@
 name: StaticPulse-AI
-description: AI-assisted PR security review — Semgrep scanners + an LLM that proposes fixes it verifies by re-scanning, with a deterministic PASS/WARN/FAIL gate.
+description: AI-assisted PR security review — Semgrep scanners + an LLM that proposes fixes.
 author: Akash Poudel
 branding:
   icon: shield
