@@ -1,0 +1,5 @@
+# Shell scripts and Docker files must stay LF so they work inside Linux images.
+*.sh text eol=lf
+docker/entrypoint.sh text eol=lf
+Dockerfile text eol=lf
+* text=auto
