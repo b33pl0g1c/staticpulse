@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "staticpulse"
+version = "0.0.1"
+description = "StaticPulse - blends static analysis with real-time continuous evaluation; an AI-assisted PR security reviewer."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "pydantic>=2.6,<3",
+    "typer>=0.15",   # works with click 8.x that modern semgrep pulls in
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+scan = ["semgrep"]
+
+[project.scripts]
+staticpulse = "staticpulse.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["staticpulse*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

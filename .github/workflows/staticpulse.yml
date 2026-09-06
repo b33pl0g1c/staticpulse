@@ -1,0 +1,76 @@
+# StaticPulse — PR security review
+#
+# Runs on every pull request. Scans the diff, posts a summary comment (edited
+# in place on re-push) plus inline review comments, and sets the CI status:
+# a FAIL decision exits non-zero and blocks the merge.
+#
+# Setup: add a repository secret GROQ_API_KEY to enable the LLM layer
+# (https://console.groq.com/keys). Without it, StaticPulse still runs
+# scanners-only and posts the deterministic result.
+#
+# Fork PRs: GitHub gives pull_request runs from forks a read-only token and no
+# secrets. StaticPulse detects this, skips posting, and still sets the status —
+# it never errors on a fork PR.
+
+name: StaticPulse
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# A fresh push cancels the previous in-flight run for the same PR.
+concurrency:
+  group: staticpulse-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read          # read the code to scan it
+  pull-requests: write    # post the review + inline comments
+  issues: write           # the summary comment goes through the issues API
+
+jobs:
+  review:
+    name: staticpulse scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so origin/<base>...HEAD diffs cleanly
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install StaticPulse + Semgrep
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install semgrep
+
+      # Reuse the LLM + response cache across re-pushes of the same PR so a
+      # second push doesn't re-bill the model. Keyed on the head SHA.
+      - name: Cache StaticPulse responses
+        uses: actions/cache@v4
+        with:
+          path: .staticpulse_cache
+          key: staticpulse-cache-${{ github.event.pull_request.head.sha }}
+          restore-keys: staticpulse-cache-
+
+      - name: Run StaticPulse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        # Exit 1 on FAIL (blocks the PR), 0 on PASS/WARN, 2 on a terminal error.
+        run: staticpulse scan-pr --repo . --output report.json
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staticpulse-report
+          path: report.json
+          if-no-files-found: ignore

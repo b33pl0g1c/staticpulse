@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+report.json
+.env
+.staticpulse_cache/
+.staticpulse_memory.json
+reports/

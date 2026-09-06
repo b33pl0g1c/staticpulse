@@ -1,0 +1,5 @@
+expected_decision: FAIL
+labels:
+  - file: run.py
+    line_range: [3, 3]
+    type: command_injection

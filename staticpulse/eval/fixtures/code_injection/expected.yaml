@@ -1,0 +1,5 @@
+expected_decision: FAIL
+labels:
+  - file: calc.py
+    line_range: [2, 2]
+    type: code_injection

@@ -1,0 +1,515 @@
+<title>StaticPulse Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #eef1f5;
+    --ink: #171b22;
+    --ink-soft: #48505f;
+    --ink-faint: #79828f;
+    --border: #e1e5ec;
+    --border-strong: #cfd5df;
+    --accent: #3b4fd6;
+    --accent-ink: #2c3bb0;
+    --accent-soft: #edeffc;
+    --pass: #2f9e44;
+    --warn: #b5620b;
+    --fail: #d92d2d;
+    --code-bg: #f2f4f8;
+    --shadow: 0 1px 2px rgba(20,28,45,.05), 0 8px 24px rgba(20,28,45,.05);
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #0e1116;
+      --surface: #151a21;
+      --surface-2: #1b212b;
+      --ink: #e7eaef;
+      --ink-soft: #aab3c1;
+      --ink-faint: #717b89;
+      --border: #262d38;
+      --border-strong: #333c49;
+      --accent: #8090f6;
+      --accent-ink: #a3aefa;
+      --accent-soft: #191f30;
+      --pass: #54cf6a;
+      --warn: #f0a54a;
+      --fail: #ff6b6b;
+      --code-bg: #10151c;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1116;
+    --surface: #151a21;
+    --surface-2: #1b212b;
+    --ink: #e7eaef;
+    --ink-soft: #aab3c1;
+    --ink-faint: #717b89;
+    --border: #262d38;
+    --border-strong: #333c49;
+    --accent: #8090f6;
+    --accent-ink: #a3aefa;
+    --accent-soft: #191f30;
+    --pass: #54cf6a;
+    --warn: #f0a54a;
+    --fail: #ff6b6b;
+    --code-bg: #10151c;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---------- header ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--border);
+    padding: 56px 0 34px;
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+    font-weight: 700;
+  }
+  h1 .arrow { color: var(--ink-faint); font-weight: 400; }
+  .lede {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin: 0;
+  }
+
+  /* ---------- status strip ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 30px 0 8px;
+  }
+  .stat { background: var(--surface); padding: 16px 18px; }
+  .stat .k { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .stat .v { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; margin-top: 4px; letter-spacing: -.01em; }
+  .stat .v small { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 52px; scroll-margin-top: 20px; }
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .sec-label::before {
+    content: "";
+    width: 22px; height: 2px; background: var(--accent); border-radius: 2px;
+  }
+  h2 { font-size: 26px; letter-spacing: -.015em; margin: 0 0 14px; font-weight: 700; text-wrap: balance; }
+  h3 { font-size: 18px; margin: 30px 0 8px; font-weight: 600; letter-spacing: -.01em; }
+  p { max-width: 68ch; }
+  p.tight { margin: 8px 0; }
+  a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+  a:hover { border-bottom-color: var(--accent); }
+  strong { font-weight: 600; }
+  code {
+    font-family: var(--mono);
+    font-size: .87em;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 6px;
+  }
+
+  /* ---------- callout ---------- */
+  .thesis {
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin: 22px 0;
+  }
+  .thesis p { margin: 0; max-width: none; font-size: 17px; }
+  .thesis .tag { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-ink); font-weight: 600; display: block; margin-bottom: 8px; }
+
+  /* ---------- pipeline diagram ---------- */
+  .pipe-scroll { overflow-x: auto; padding: 6px 2px 12px; margin: 8px 0; }
+  .pipe {
+    display: flex; align-items: stretch; gap: 0; min-width: 720px;
+  }
+  .pstage {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 15px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 5px; min-width: 132px;
+  }
+  .pstage .pnum { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .08em; }
+  .pstage .pname { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+  .pstage .ptool { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+  .pstage.det { border-left: 3px solid var(--accent); }
+  .pstage.llm { border-left: 3px solid var(--warn); border-style: dashed; }
+  .parrow { display: flex; align-items: center; color: var(--ink-faint); font-size: 22px; padding: 0 6px; flex: 0 0 auto; }
+  .pipe-legend { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+  .pipe-legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 22px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ---------- decision chips ---------- */
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0 4px; }
+  .chip {
+    font-family: var(--mono); font-weight: 600; font-size: 13px;
+    padding: 6px 12px; border-radius: 999px; display: inline-flex; gap: 8px; align-items: center;
+    border: 1px solid;
+  }
+  .chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+  .chip.pass { color: var(--pass); border-color: color-mix(in srgb, var(--pass) 40%, transparent); background: color-mix(in srgb, var(--pass) 10%, transparent); }
+  .chip.pass::before { background: var(--pass); }
+  .chip.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); background: color-mix(in srgb, var(--warn) 10%, transparent); }
+  .chip.warn::before { background: var(--warn); }
+  .chip.fail { color: var(--fail); border-color: color-mix(in srgb, var(--fail) 40%, transparent); background: color-mix(in srgb, var(--fail) 10%, transparent); }
+  .chip.fail::before { background: var(--fail); }
+
+  /* ---------- tables ---------- */
+  .table-scroll { overflow-x: auto; margin: 16px 0; border: 1px solid var(--border); border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 520px; }
+  th, td { text-align: left; padding: 11px 15px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td code { background: none; border: none; padding: 0; color: var(--accent-ink); }
+  td.num { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+
+  /* ---------- code block ---------- */
+  pre {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.7;
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; overflow-x: auto; margin: 14px 0;
+  }
+  pre .cm { color: var(--ink-faint); }
+  pre .pr { color: var(--accent-ink); }
+
+  /* ---------- phase cards ---------- */
+  .phase { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 20px 22px; margin: 14px 0; box-shadow: var(--shadow); }
+  .phase-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .phase-n { font-family: var(--mono); font-weight: 600; font-size: 13px; color: var(--surface); background: var(--ink-faint); border-radius: 7px; padding: 3px 9px; letter-spacing: .04em; }
+  .phase.done .phase-n { background: var(--pass); }
+  .phase.next .phase-n { background: var(--accent); }
+  .phase-title { font-weight: 600; font-size: 18px; letter-spacing: -.01em; }
+  .phase-badge { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-left: auto; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--ink-faint); }
+  .phase.done .phase-badge { color: var(--pass); border-color: color-mix(in srgb, var(--pass) 40%, transparent); }
+  .phase.next .phase-badge { color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+  .phase ul { margin: 12px 0 0; padding-left: 20px; }
+  .phase li { margin: 5px 0; color: var(--ink-soft); }
+  .phase li strong { color: var(--ink); }
+
+  ul.plain { list-style: none; padding: 0; }
+  ul.plain li { padding-left: 26px; position: relative; margin: 10px 0; max-width: 68ch; }
+  ul.plain li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+
+  .fix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 16px 0; }
+  .fixcard { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; background: var(--surface); }
+  .fixcard h4 { margin: 0 0 6px; font-size: 15px; font-family: var(--mono); font-weight: 600; }
+  .fixcard p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: none; }
+
+  footer { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--border); color: var(--ink-faint); font-size: 13px; font-family: var(--mono); }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px 64px; }
+    header.masthead { padding: 40px 0 26px; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <p class="eyebrow">Engineering Onboarding · Internal</p>
+    <h1>StaticPulse</h1>
+    <p class="lede">Blends static analysis with real-time, continuous evaluation. An AI-assisted pull-request security reviewer with a deterministic policy core — this is the briefing for anyone picking the project up: what it is, what shipped, and where it goes next.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Phase</div><div class="v">0&#8211;5 <small>built</small></div></div>
+      <div class="stat"><div class="k">Python code</div><div class="v">3,362 <small>lines</small></div></div>
+      <div class="stat"><div class="k">Tests</div><div class="v">64 <small>passing</small></div></div>
+      <div class="stat"><div class="k">Scanner</div><div class="v">Semgrep <small>1.176</small></div></div>
+      <div class="stat"><div class="k">API key</div><div class="v">None <small>needed</small></div></div>
+    </div>
+  </header>
+
+  <!-- ============ WHAT IT IS ============ -->
+  <section id="what">
+    <div class="sec-label">Orientation</div>
+    <h2>What this project is</h2>
+    <p><strong>StaticPulse</strong> (<code>staticpulse</code> on the CLI) runs on a pull request, looks at what changed, and returns a single verdict a CI job can gate on: <strong>PASS</strong>, <strong>WARN</strong>, or <strong>FAIL</strong>. A deterministic scanner pipeline handles the pattern-matchable bugs; an LLM layer reasons about exploitability and proposes fixes it then <em>verifies</em> — but a plain-Python policy engine always makes the final call.</p>
+
+    <div class="chips">
+      <span class="chip pass">PASS · exit 0</span>
+      <span class="chip warn">WARN · exit 0</span>
+      <span class="chip fail">FAIL · exit 1</span>
+    </div>
+
+    <div class="thesis">
+      <span class="tag">The one idea that matters</span>
+      <p>The LLM is <strong>only ever advisory</strong>. A plain-Python policy engine makes the final PASS / WARN / FAIL call. That keeps the gate reproducible, auditable, and fully functional even when every LLM provider is down — running with <code>--no-llm</code> gives the true decision.</p>
+    </div>
+
+    <h3>Where it sits in the bigger picture</h3>
+    <p>It is the <strong>static, reactive</strong> half of a pair. Its sibling project, <code>agentic-pentester</code>, is the <strong>dynamic, active</strong> half — an agent that attacks a running app. The long-term plan (Phase&nbsp;3) bridges them: when the reviewer flags a reachable, endpoint-level issue, it can hand that hypothesis to the pentester to confirm by actually calling the endpoint.</p>
+  </section>
+
+  <!-- ============ PIPELINE ============ -->
+  <section id="pipeline">
+    <div class="sec-label">How it works</div>
+    <h2>The pipeline</h2>
+    <p>The flow is linear and short, so it is a plain Python function rather than a graph framework — easier to read and debug while the domain is still being learned. A graph goes in later only if fan-out gets complex.</p>
+
+    <div class="pipe-scroll">
+      <div class="pipe">
+        <div class="pstage det">
+          <span class="pnum">01</span>
+          <span class="pname">Diff</span>
+          <span class="ptool">git_diff.py</span>
+        </div>
+        <div class="parrow">→</div>
+        <div class="pstage det">
+          <span class="pnum">02</span>
+          <span class="pname">Scan</span>
+          <span class="ptool">semgrep_runner.py</span>
+        </div>
+        <div class="parrow">→</div>
+        <div class="pstage det">
+          <span class="pnum">03</span>
+          <span class="pname">Normalize + scope</span>
+          <span class="ptool">normalizer.py</span>
+        </div>
+        <div class="parrow">→</div>
+        <div class="pstage det">
+          <span class="pnum">04</span>
+          <span class="pname">Decide</span>
+          <span class="ptool">policy/engine.py</span>
+        </div>
+        <div class="parrow">→</div>
+        <div class="pstage llm">
+          <span class="pnum">05</span>
+          <span class="pname">LLM review</span>
+          <span class="ptool">exploitability.py</span>
+        </div>
+      </div>
+    </div>
+    <div class="pipe-legend">
+      <span><i class="swatch" style="background:var(--accent)"></i> Deterministic — runs today, no API key</span>
+      <span><i class="swatch" style="background:var(--warn)"></i> LLM — advisory second opinion, live</span>
+    </div>
+
+    <h3>Two behaviours worth knowing on day one</h3>
+    <ul class="plain">
+      <li><strong>Diff-scoping.</strong> Findings on files or lines the PR did not touch are dropped. Without it, the bot blames the author for the whole repo's existing backlog. A finding on a changed line stays; the same rule firing on an untouched file is discarded.</li>
+      <li><strong>safe_join.</strong> A PR reviewer opens files whose paths come from scanners, diffs, and even LLM output — some ultimately derived from attacker-controlled PR content. A bare <code>Path(repo)&nbsp;/&nbsp;file_path</code> join lets <code>../../etc/passwd</code> escape the repo root, so every file read routes through one path-traversal-safe helper where the check lives exactly once.</li>
+    </ul>
+  </section>
+
+  <!-- ============ MODULE MAP ============ -->
+  <section id="modules">
+    <div class="sec-label">The codebase</div>
+    <h2>Module map</h2>
+    <p>Ten source files, deliberately small. Read them in pipeline order; each does one job.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>File</th><th>Lines</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>schemas/finding.py</code></td><td class="num">49</td><td>The one normalized <code>Finding</code> shape every scanner produces and every later stage consumes.</td></tr>
+          <tr><td><code>schemas/ids.py</code></td><td class="num">37</td><td>Stable content-hash IDs, so re-pushing a PR doesn't create "new" findings for the same issue.</td></tr>
+          <tr><td><code>utils/safe_join.py</code></td><td class="num">66</td><td>The single path-traversal-safe file reader. Tested before anything used it.</td></tr>
+          <tr><td><code>tools/semgrep_runner.py</code></td><td class="num">124</td><td>Runs Semgrep, converts its JSON into <code>Finding</code>s. Resolves the executable next to the interpreter.</td></tr>
+          <tr><td><code>tools/git_diff.py</code></td><td class="num">114</td><td>Changed files + changed line ranges. Actions, local, and no-git fallback modes.</td></tr>
+          <tr><td><code>agents/normalizer.py</code></td><td class="num">69</td><td>Dedup by ID + drop findings outside the diff's changed files and lines.</td></tr>
+          <tr><td><code>policy/engine.py</code></td><td class="num">108</td><td>Pure-Python PASS / WARN / FAIL + a 0–100 risk score. No LLM call.</td></tr>
+          <tr><td><code>orchestrator.py</code></td><td class="num">58</td><td>Wires the four stages together and returns a <code>RunResult</code>.</td></tr>
+          <tr><td><code>agents/exploitability.py</code></td><td class="num">104</td><td>Per-finding LLM second opinion. Never sends a critical secret to the model.</td></tr>
+          <tr><td><code>llm/groq_client.py</code></td><td class="num">160</td><td>Groq client (stdlib only). Cache-first, budget-gated, one corrective retry.</td></tr>
+          <tr><td><code>llm/cache.py</code></td><td class="num">68</td><td>Content-addressed response cache — a re-run costs zero tokens.</td></tr>
+          <tr><td><code>llm/budget.py</code></td><td class="num">50</td><td>The single shared per-PR budget tracker, built once so the cap is enforced in one place.</td></tr>
+          <tr><td><code>agents/patch.py</code></td><td class="num">175</td><td>Verify-by-rescan: generate a fix, apply to a throwaway copy, re-scan, mark verified.</td></tr>
+          <tr><td><code>tools/rescan.py</code></td><td class="num">55</td><td>Re-runs Semgrep on a patched tree and checks whether the finding persists.</td></tr>
+          <tr><td><code>memory.py</code></td><td class="num">62</td><td>Cross-push review memory — dismissed findings stay suppressed by stable ID.</td></tr>
+          <tr><td><code>bridge.py</code></td><td class="num">90</td><td>Selects dynamically-confirmable findings and writes a handoff for the pentester.</td></tr>
+          <tr><td><code>github.py</code></td><td class="num">120</td><td>GitHub API client (stdlib): summary comment (marker-edited) + inline review comments.</td></tr>
+          <tr><td><code>report_md.py</code></td><td class="num">95</td><td>Renders the PR summary and inline comments; verified fixes become one-click suggestions.</td></tr>
+          <tr><td><code>eval/gitbuild.py</code></td><td class="num">62</td><td>Builds a real two-commit git repo from a fixture's base/head — the eval differentiator.</td></tr>
+          <tr><td><code>eval/runner.py</code></td><td class="num">115</td><td>Runs every fixture in scanners-only and full mode; aggregates recall/precision.</td></tr>
+          <tr><td><code>eval/matcher.py</code></td><td class="num">95</td><td>Matches findings to expected labels (path + line overlap + type alias).</td></tr>
+          <tr><td><code>cli.py</code></td><td class="num">140</td><td>Typer CLI: <code>scan</code>, <code>dismiss</code>, <code>restore</code>, <code>handoff</code>. Maps the decision to an exit code.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ WHAT SHIPPED ============ -->
+  <section id="shipped">
+    <div class="sec-label">Changelog</div>
+    <h2>What was done in Phase 0 + 1</h2>
+    <p>Phase 0 stood up the skeleton; Phase 1 added the deterministic core. Both are complete and verified end-to-end with a real Semgrep scan running natively on Windows: the vulnerable fixture scans to <span class="chip fail" style="padding:2px 9px">FAIL</span> and the clean one to <span class="chip pass" style="padding:2px 9px">PASS</span>.</p>
+
+    <h3>Three integration problems surfaced and got fixed</h3>
+    <p>Each is a real-world integration lesson worth internalizing, because they will recur on any Python security tool that shells out to scanners.</p>
+    <div class="fix-grid">
+      <div class="fixcard">
+        <h4>Typer × Click</h4>
+        <p>Installing Semgrep pulled Click 8.4, which breaks Typer 0.12. The fix is to move Typer forward, not pin Click back — <code>typer&gt;=0.15</code> works with the Click that modern Semgrep needs.</p>
+      </div>
+      <div class="fixcard">
+        <h4>PATH resolution</h4>
+        <p><code>shutil.which("semgrep")</code> misses the venv's copy when the venv isn't activated. The runner now resolves the executable next to the interpreter instead.</p>
+      </div>
+      <div class="fixcard">
+        <h4>Brittle keywords</h4>
+        <p>The FAIL rule looked for <code>sql-injection</code>, but Semgrep names its rules <code>formatted-sql-query</code>. It WARNed until the keyword list was broadened — and a too-broad <code>subprocess</code> keyword was removed to protect precision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RUN IT ============ -->
+  <section id="run">
+    <div class="sec-label">Getting started</div>
+    <h2>Run it yourself</h2>
+    <pre><span class="cm"># from the project root</span>
+python -m venv .venv
+.venv\Scripts\activate          <span class="cm"># Windows</span>
+pip install -e ".[dev]"
+pip install semgrep
+
+<span class="cm"># scan a path — deterministic, no key required</span>
+staticpulse scan --repo tests/fixtures/sqli --no-llm --output report.json
+
+<span class="cm"># run the tests</span>
+pytest -q</pre>
+    <p class="tight"><strong>Exit codes:</strong> <code>0</code> for PASS or WARN, <code>1</code> for FAIL, <code>2</code> for a terminal error — so a CI job's status reflects the gate directly.</p>
+    <p class="tight"><strong>Windows note:</strong> recent Semgrep (1.176+) runs natively and is verified here. If Semgrep is ever missing, <code>staticpulse</code> still runs: it reports the gap and returns a deterministic decision on whatever findings it has.</p>
+  </section>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section id="principles">
+    <div class="sec-label">Design principles</div>
+    <h2>The decisions that shape the code</h2>
+    <p>A few principles recur throughout the codebase. Knowing them makes the rest read quickly.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Principle</th><th>Why it's built this way</th></tr></thead>
+        <tbody>
+          <tr><td>Advisory LLM, deterministic decision</td><td>The gate must be reproducible and auditable, so a plain-Python engine — never the model — makes the PASS/WARN/FAIL call.</td></tr>
+          <tr><td>Diff-scoping to the PR's changed lines</td><td>A reviewer should judge the change, not the repo's backlog; findings outside the diff are dropped, and the eval harness proves it.</td></tr>
+          <tr><td>Stable content-hash finding IDs</td><td>The same issue keeps the same ID across re-pushes, which is what makes cross-push false-positive memory possible.</td></tr>
+          <tr><td>One safe file reader</td><td>A path-traversal guard is easy to forget in one reader out of many, so all reads route through a single <code>safe_join()</code>.</td></tr>
+          <tr><td>One shared budget tracker</td><td>Built once in the orchestrator so a per-PR token/call cap is enforced in exactly one place, not multiplied per agent.</td></tr>
+          <tr><td>Evaluation on real git repos</td><td>Fixtures are assembled into two-commit repos at runtime, so the diff-scoping the eval measures is actually exercised.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ ROADMAP ============ -->
+  <section id="roadmap">
+    <div class="sec-label">What's next</div>
+    <h2>The roadmap</h2>
+    <p>Phases are a real build sequence — each depends on the one before. Two are done; four remain.</p>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">00</span><span class="phase-title">Skeleton</span><span class="phase-badge">Done</span></div>
+      <ul>
+        <li>CLI, <code>Finding</code> schema, stable IDs, the Semgrep runner, and the <code>safe_join</code> guard (tested first).</li>
+      </ul>
+    </div>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">01</span><span class="phase-title">Deterministic core</span><span class="phase-badge">Done</span></div>
+      <ul>
+        <li>Git diff + changed-line ranges, the normalizer's dedup and diff-scope, and the pure-Python policy engine. Verified: SQLi → FAIL, clean → PASS.</li>
+      </ul>
+    </div>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">02</span><span class="phase-title">LLM layer, done right</span><span class="phase-badge">Done</span></div>
+      <ul>
+        <li><strong>Exploitability second-opinion</strong> per finding, with a hard rule that a critical secret is never downgraded.</li>
+        <li><strong>One shared budget tracker</strong> created in the orchestrator, so the per-PR cap is enforced in exactly one place.</li>
+        <li><strong>Content-addressed response cache</strong> so re-runs don't re-bill; second run is a full cache hit.</li>
+      </ul>
+    </div>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">03</span><span class="phase-title">Differentiators</span><span class="phase-badge">Done</span></div>
+      <ul>
+        <li><strong>Verify-by-rescan patches (C1)</strong> — the LLM's fix is spliced into a throwaway copy and Semgrep re-runs; <code>verified</code> only if the finding disappears. Nothing touches the real tree. Confirmed live.</li>
+        <li><strong>Cross-push false-positive memory (C4)</strong> — <code>dismiss</code> / <code>restore</code> a finding by its stable ID; later scans suppress it.</li>
+        <li><strong>Pentester bridge (C5, seam)</strong> — <code>handoff</code> emits dynamically-confirmable findings for <code>agentic-pentester</code> to prove by calling the live app.</li>
+        <li><em>Deferred:</em> inline PR review comments (needs a live PR) roll into Phase 5.</li>
+      </ul>
+    </div>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">04</span><span class="phase-title">Evaluation harness</span><span class="phase-badge">Done</span></div>
+      <ul>
+        <li>Fixtures are <code>base/</code> + <code>head/</code> trees; the harness builds a <strong>real two-commit git repo</strong> at runtime, so the diff-scoping the eval measures is genuinely exercised rather than skipped on a static directory.</li>
+        <li><code>staticpulse eval run</code> reports recall / precision / decision accuracy / latency / tokens; <code>--update-readme</code> writes the table from the JSON so docs can't drift.</li>
+        <li>Honest result: 5/6 correct, recall 0.80, precision 0.80. The one miss (<code>missing_authz</code>) is a semantic bug no pattern scanner sees — the eval quantifies the recall ceiling.</li>
+      </ul>
+    </div>
+
+    <div class="phase done">
+      <div class="phase-head"><span class="phase-n">05</span><span class="phase-title">Ship it</span><span class="phase-badge">Built</span></div>
+      <ul>
+        <li>A <code>pull_request</code> GitHub Actions workflow (<code>scan-pr</code>): posts a summary comment (marker-edited on re-push) + inline review comments, verified fixes as one-click <code>suggestion</code> blocks, and sets the CI status (FAIL blocks the merge).</li>
+        <li>Least-privilege permissions; fork-PR runs detect the read-only token, skip posting, and still set the status.</li>
+        <li>All rendering + client logic is unit-tested offline with a mocked API; live end-to-end runs on the first real PR.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ GLOSSARY ============ -->
+  <section id="glossary">
+    <div class="sec-label">Reference</div>
+    <h2>Terms of art</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>Finding</code></td><td>One normalized security issue: id, source, severity, confidence, file, line, title. Every scanner emits this shape.</td></tr>
+          <tr><td>Diff-scope</td><td>Restricting findings to the files and lines the PR changed, so pre-existing issues aren't blamed on the author.</td></tr>
+          <tr><td>Deterministic core</td><td>The parts that run with no LLM — scanners, normalizer, policy engine. They alone decide the gate.</td></tr>
+          <tr><td>High-impact pattern</td><td>A bug class that FAILs by consensus (SQLi, command injection, deserialization, XXE, SSRF, path traversal) matched against a rule's id and title.</td></tr>
+          <tr><td>Verify-by-rescan</td><td>Proving a proposed patch works by applying it to a throwaway worktree and re-running the scanner (Phase 3).</td></tr>
+          <tr><td>PASS / WARN / FAIL</td><td>The gate verdict. PASS and WARN exit 0; FAIL exits 1 and should block the merge.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    StaticPulse · onboarding briefing · Phases 0–5 built · GitHub PR integration with inline comments · 64 tests
+  </footer>
+</div>

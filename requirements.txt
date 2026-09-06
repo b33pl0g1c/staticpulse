@@ -1,0 +1,4 @@
+pydantic>=2.6,<3
+typer>=0.15
+# Install semgrep separately for scanning: pip install semgrep
+# (semgrep pulls in a compatible click 8.x)
