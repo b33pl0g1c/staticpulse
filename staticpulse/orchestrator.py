@@ -73,7 +73,7 @@ def run_pipeline(
             findings, llm_errors = review_findings(findings, client=client, repo_path=str(repo))
             llm_used = True
             if llm_errors:
-                errors["exploitability"] = f"{len(llm_errors)} finding(s) errored"
+                errors["exploitability"] = f"{len(llm_errors)} finding(s) errored: {llm_errors[0][:160]}"
 
             if generate_patches_enabled:
                 findings, patch_errors = generate_patches(
@@ -81,7 +81,7 @@ def run_pipeline(
                 )
                 patches_verified = sum(1 for f in findings if f.patch_status == "verified")
                 if patch_errors:
-                    errors["patch"] = f"{len(patch_errors)} finding(s) errored"
+                    errors["patch"] = f"{len(patch_errors)} finding(s) errored: {patch_errors[0][:160]}"
 
     # --- cross-push review memory: suppress previously-dismissed findings ---
     memory = ReviewMemory.load(repo)
